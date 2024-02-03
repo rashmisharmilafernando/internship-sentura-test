@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {useState} from "react";
 import {useLocation} from "react-router-dom";
@@ -9,12 +9,19 @@ function App() {
     const location = useLocation();
 
     let user = location?.state?.user;
-
+interface Data{
+    userId:string,
+    email:string,
+    name:string,
+    phoneNumber:string
+}
     const [userId, setUserId] = useState<string>(user ? user.userId : "");
     const [email, setEamil] = useState<string>(user ? user.email : "");
     const [name, setName] = useState<string>(user ? user.name : "");
     const [phoneNumber, setPhoneNumber] = useState<string>(user ? user.phoneNumber : "");
+    const [data, setData] = useState<Data[]>([]);
 
+    //Handle the input
     const handleInput = (e: any, type: string) => {
         switch (type) {
             case 'userId':
@@ -32,7 +39,11 @@ function App() {
         }
     }
 
+    useEffect(()=>{
+        getAllUser();
+    },[]);
 
+    // save and update
     const saveDetails = () => {
 
         const headers = {
@@ -69,8 +80,23 @@ function App() {
         }
     }
 
+    // Delect
     const delectUser = () => {
 
+    }
+
+    // get All User
+    const getAllUser=()=>{
+        const headers={
+            'Content-Type': 'application/json',
+        }
+        axios.get("http://localhost:8080/api/users",{headers:headers})
+            .then(r=>{
+                setData(r.data.data)
+            })
+            .catch(e=>{
+                alert("Try again");
+            })
     }
     return (
         <div>
@@ -86,7 +112,7 @@ function App() {
                     <div className="md:w-2/3">
                         <input
                             className="bg-black-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-black-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
-                            id="inline-full-name" type="text"/>
+                            id="inline-full-name" type="text"  onChange={handleInput}/>
                     </div>
                 </div>
                 <div className="md:flex md:items-center mb-6">
@@ -99,7 +125,11 @@ function App() {
                     <div className="md:w-2/3">
                         <input
                             className="bg-black-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-black-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
-                            id="inline-full-name" type="text"/>
+                            id="inline-full-name"
+                            type="text"
+                            onChange={handleInput}
+
+                        />
                     </div>
                 </div>
                 <div className="md:flex md:items-center mb-6">
@@ -112,7 +142,10 @@ function App() {
                     <div className="md:w-2/3">
                         <input
                             className="bg-black-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-black-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
-                            id="inline-full-name" type="text"/>
+                            id="inline-full-name"
+                            type="text"
+                            onChange={handleInput}
+                        />
                     </div>
                 </div>
                 <div className="md:flex md:items-center mb-6">
@@ -125,7 +158,10 @@ function App() {
                     <div className="md:w-2/3">
                         <input
                             className="bg-black-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-black-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
-                            id="inline-full-name" type="text"/>
+                            id="inline-full-name"
+                            type="text"
+                            onChange={handleInput}
+                        />
                     </div>
                 </div>
 
