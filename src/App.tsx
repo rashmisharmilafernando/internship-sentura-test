@@ -65,7 +65,7 @@ function App() {
                 <button
                     className="ml-5 shadow bg-green-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                     type="button">
-                   Save
+                   Save User
                 </button>
 
             </form>
